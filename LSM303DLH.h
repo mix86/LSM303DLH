@@ -1,5 +1,5 @@
 #include "mbed.h"
-#include "vector.h"
+#include "myvector.h"
 
 #include "LSM303DLH_RegisterDef.h"
 
@@ -92,17 +92,17 @@ class LSM303DLH {
          * @param a is the accelerometer 3d vector, written by the function
          * @param m is the magnetometer 3d vector, written by the function
          */
-        bool read(vector &a, vector &m);
+        bool read(myvector &a, myvector &m);
         /** read the raw accelerometer values
          *
          * @param a is the accelerometer 3d vector, written by the function
          */
-        bool read_acc_raw(vector *a);
+        bool read_acc_raw(myvector *a);
         /** read the raw compass values
          *
          * @param m is the magnetometer 3d vector, written by the function
          */
-        bool read_mag_raw(vector *m);
+        bool read_mag_raw(myvector *m);
         
         /** returns the magnetic heading with respect to the y axis
          *
@@ -112,7 +112,7 @@ class LSM303DLH {
         /** returns the heading with respect to the specified vector
          *
          */
-        float heading(vector from);
+        float heading(myvector from);
     
         /** sets the I2C bus frequency
          *

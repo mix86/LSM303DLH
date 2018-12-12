@@ -201,7 +201,7 @@ void LSM303DLH::setScale(float x, float y, float z)
     _scale_z = z;
 }
 //#define _FS 4
-bool LSM303DLH::read(vector &a, vector &m)
+bool LSM303DLH::read(myvector &a, myvector &m)
 {
     
     bool result = true;
@@ -217,7 +217,7 @@ bool LSM303DLH::read(vector &a, vector &m)
         usec1 = t.read_us();
     #endif
    
-    static vector local_a, local_m;
+    static myvector local_a, local_m;
     
     result &= read_acc_raw(&local_a);
     
@@ -271,12 +271,12 @@ bool LSM303DLH::read(vector &a, vector &m)
 // is pointing.
 float LSM303DLH::heading()
 {
-    return heading((vector){0,-1,0});
+    return heading((myvector){0,-1,0});
 }
 
-float LSM303DLH::heading(vector from)
+float LSM303DLH::heading(myvector from)
 {
-    vector a, m;
+    myvector a, m;
 
     read(a, m);
     
@@ -284,14 +284,14 @@ float LSM303DLH::heading(vector from)
     // compute heading       
     ////////////////////////////////////////////////
 
-    vector temp_a = a;
+    myvector temp_a = a;
     // normalize
     vector_normalize(&temp_a);
     //vector_normalize(&m);
 
     // compute E and N
-    vector E;
-    vector N;
+    myvector E;
+    myvector N;
     vector_cross(&m,&temp_a,&E);
     vector_normalize(&E);
     vector_cross(&temp_a,&E,&N);
@@ -321,7 +321,7 @@ float LSM303DLH::get_acc_value_in_g(OUT_XYZ_t* dataOut)
    return (float) (dataOut->value / (float)(32768 /*half of the ADC resolution*/ / m_FS/*+- 4g*/));
 }
 
-bool LSM303DLH::read_acc_raw(vector *a)
+bool LSM303DLH::read_acc_raw(myvector *a)
 {
     bool result = true;
     char data_read_acc =0;
@@ -371,7 +371,7 @@ bool LSM303DLH::read_acc_raw(vector *a)
     
     return result;
 }
-bool LSM303DLH::read_mag_raw(vector *m)
+bool LSM303DLH::read_mag_raw(myvector *m)
 {
     bool result = true;
     char data_read_mag =0;
